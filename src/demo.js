@@ -79,14 +79,14 @@
                                         return keyIs(keys.right).selectMany(function () {
                                             return keyIs(keys.b).selectMany(function () {
                                                 return keyIs(keys.a);
-                                            }).takeUntil(keyIsNot(keys.b));
-                                        }).takeUntil(keyIsNot(keys.right));
-                                    }).takeUntil(keyIsNot(keys.left));
-                                }).takeUntil(keyIsNot(keys.right));
-                            }).takeUntil(keyIsNot(keys.left));
-                        }).takeUntil(keyIsNot(keys.down));
-                    }).takeUntil(keyIsNot(keys.down));
-                }).takeUntil(keyIsNot(keys.up));
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
             });
             
             konamiCode.subscribe(function () {
