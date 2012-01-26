@@ -1,8 +1,10 @@
 (function () {
 
     var Observable = Rx.Observable;
+    
     function subscribeToDrag() {
         var redRect = document.getElementById("redRect"),
+        
             mouseDown = Observable.fromEvent(redRect, "mousedown"),
             mouseMove = Observable.fromEvent(document, "mousemove").select(function (e) {
                 return {
@@ -28,6 +30,70 @@
                     redRect.style.top = (y + delta.dy) + "px";
             });
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function subscribeToKonami() {
+        var keys = {
+                up: 38,
+                down: 40,
+                left: 37,
+                right: 39,
+                b: 66,
+                a: 65
+            },
+            theTextBox = document.getElementById("theTextBox"),
+            
+            keyUp = Observable.fromEvent(theTextBox, "keyup"),
+            
+            keyIs = function (key) {
+                return keyUp.where(function (k) { 
+                    return k.keyCode === key; 
+                });
+            },
+            keyIsNot = function (key) {
+                return keyUp.where(function (k) { return k.keyCode !== key; });
+            },
+            
+           /* konamiCode = keyIs(key.up).selectMany(function () {
+                return keyIs(key.up).selectMany(function () {
+                
+                }).TakeUntil(keyIsNot(key.up);
+            });*/
+            konamiCode = keyIs(keys.up).selectMany(function () {
+                return keyIs(keys.up).selectMany(function () {
+                    return keyIs(keys.down).selectMany(function () {
+                        return keyIs(keys.down).selectMany(function () {
+                            return keyIs(keys.left).selectMany(function () {
+                                return keyIs(keys.right).selectMany(function () {
+                                    return keyIs(keys.left).selectMany(function () {
+                                        return keyIs(keys.right).selectMany(function () {
+                                            return keyIs(keys.b).selectMany(function () {
+                                                return keyIs(keys.a);
+                                            }).takeUntil(keyIsNot(keys.b));
+                                        }).takeUntil(keyIsNot(keys.right));
+                                    }).takeUntil(keyIsNot(keys.left));
+                                }).takeUntil(keyIsNot(keys.right));
+                            }).takeUntil(keyIsNot(keys.left));
+                        }).takeUntil(keyIsNot(keys.down));
+                    }).takeUntil(keyIsNot(keys.down));
+                }).takeUntil(keyIsNot(keys.up));
+            });
+            
+            konamiCode.subscribe(function () {
+                alert("Konami code entered!");
+            });
+
+    }
 
 
 
@@ -35,6 +101,7 @@
     window.addEventListener("load", function () {
 
      subscribeToDrag();   
+     subscribeToKonami();
         
         
     });
